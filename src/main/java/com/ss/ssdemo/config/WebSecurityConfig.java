@@ -6,6 +6,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
@@ -18,16 +20,19 @@ import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuc
 // public class WebSecurityConfig implements WebMvcConfigurer {
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/css/**", "/index").permitAll()
+                .antMatchers("/css/**", "/index", "/register").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login").failureForwardUrl("/login-error").defaultSuccessUrl("/hello").permitAll()
+                .loginPage("/login").failureForwardUrl("/login-error").defaultSuccessUrl("/index").permitAll()
                 .and()
-                .logout().permitAll();
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/login").permitAll();
     }
 
     protected void configure1(HttpSecurity http) throws Exception {
@@ -53,10 +58,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    // @Autowired
+    public void authenInMemory(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser(User.withDefaultPasswordEncoder().username("admin").password("123456").roles("USER"));
+    }
+
+    // @Autowired
+    public void authenInJdbc(AuthenticationManagerBuilder auth) throws Exception {
+        User.UserBuilder users = User.withDefaultPasswordEncoder();
+        auth.jdbcAuthentication()
+                // .dataSource(dataSource)
+                .withDefaultSchema()
+                .withUser(users.username("").password("password").roles("USER"));
+    }
+
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
+
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }

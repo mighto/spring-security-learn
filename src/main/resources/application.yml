@@ -1,6 +1,22 @@
 spring:
+  profiles:
+    active: dev
+  datasource:
+    druid:
+      web-stat-filter:
+        enabled: true
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: true
+        login-username: druid
+        login-password: 123456
   thymeleaf:
     cache: false
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
 
 logging:
   level:
