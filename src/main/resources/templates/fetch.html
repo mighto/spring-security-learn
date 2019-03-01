@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh_cn">
+<head>
+    <meta charset="UTF-8">
+    <title>Fetch</title>
+</head>
+<body>
+用户名：<input name="username" id="username"/>
+密码：<input name="password" id="password"/>
+<button id="submit" onclick="login()" value="登录">登录</button>
+
+<script>
+    function login() {
+        let username = document.getElementById('username').value
+        let password = document.getElementById('password').value
+        fetch('http://localhost:8080/hl', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "username=1111&password=222",
+            _csrf: "9a764752-9034-4784-97ba-538b433e0362"
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+        })
+    }
+</script>
+</body>
+</html>

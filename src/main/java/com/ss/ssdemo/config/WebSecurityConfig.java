@@ -25,12 +25,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.authorizeRequests()
-                .antMatchers("/css/**", "/index", "/register").permitAll()
+                .antMatchers("/css/**", "/index", "/register", "/hl", "/hello").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login").failureForwardUrl("/login-error").defaultSuccessUrl("/index").permitAll()
+                .and()
+                .csrf()
                 .and()
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/login").permitAll();
     }
@@ -58,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    // @Autowired
+    @Autowired
     public void authenInMemory(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser(User.withDefaultPasswordEncoder().username("admin").password("123456").roles("USER"));
@@ -70,13 +73,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 // .dataSource(dataSource)
                 .withDefaultSchema()
-                .withUser(users.username("").password("password").roles("USER"));
+                .withUser(users.username("admin").password("password").roles("USER"));
     }
 
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-    }
+    // @Override
+    // public void configure(AuthenticationManagerBuilder auth) throws Exception {
+    //     auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    // }
 
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

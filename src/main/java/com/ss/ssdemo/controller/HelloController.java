@@ -18,4 +18,12 @@ public class HelloController {
         return new Date();
     }
 
+    @RequestMapping("/hl")
+    public String hl(String username, String password) {
+        System.out.println(username);
+        System.out.println(password);
+        return (username + password);
+    }
+
+
 }

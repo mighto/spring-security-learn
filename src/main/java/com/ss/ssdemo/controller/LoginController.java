@@ -49,4 +49,9 @@ public class LoginController {
         return "login";
     }
 
+    @RequestMapping("/fetch")
+    public String fetch() {
+        return "fetch";
+    }
+
 }
