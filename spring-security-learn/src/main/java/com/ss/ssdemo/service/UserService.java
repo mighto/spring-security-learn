@@ -3,7 +3,7 @@ package com.ss.ssdemo.service;
 import com.ss.ssdemo.entity.User;
 
 /**
- * @author wangf
+ * @author mistaker
  * @description：
  * @create 2019/02/27
  */

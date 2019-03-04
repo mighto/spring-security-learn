@@ -1,7 +1,7 @@
 package com.ss.ssdemo.constant;
 
 /**
- * @author wangf
+ * @author mistaker
  * @description：
  * @create 2019/02/27
  */

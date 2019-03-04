@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.security.Principal;
 
 /**
- * @author wangf
+ * @author mistaker
  * @description：
  * @create 2019/02/27
  */

@@ -12,7 +12,7 @@ import org.springframework.security.web.authentication.logout.CookieClearingLogo
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 
 /**
- * @author wangf
+ * @author mistaker
  * @description：
  * @create 2019/02/26
  */

@@ -3,7 +3,7 @@ package com.ss.ssdemo.config;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
- * @author wangf
+ * @author mistaker
  * @description：
  * @create 2019/02/26
  */
