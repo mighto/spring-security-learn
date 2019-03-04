@@ -33,9 +33,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login").failureForwardUrl("/login-error").defaultSuccessUrl("/index").permitAll()
                 .and()
-                .csrf()
-                .and()
+                // .csrf().disable()
                 .logout().logoutUrl("/logout").logoutSuccessUrl("/login").permitAll();
+
     }
 
     protected void configure1(HttpSecurity http) throws Exception {
